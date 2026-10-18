@@ -217,3 +217,48 @@
   </script>
 </body>
 </html>
+/* NOTHING — Premium 3D showcase effects */
+
+.showcase {
+  isolation: isolate;
+}
+
+.showcase-visual {
+  overflow: visible;
+  transform-style: preserve-3d;
+}
+
+.showcase-visual img {
+  backface-visibility: hidden;
+  transform-style: preserve-3d;
+  transition:
+    filter 0.4s ease,
+    opacity 0.4s ease;
+  filter:
+    drop-shadow(0 15px 25px rgba(255, 35, 35, 0.12));
+}
+
+.showcase-visual img:hover {
+  filter:
+    drop-shadow(0 20px 45px rgba(255, 35, 35, 0.35));
+}
+
+.showcase h2 span {
+  text-shadow: 0 0 35px rgba(255, 35, 35, 0.12);
+}
+
+/* Smooth scrolling */
+html {
+  scroll-behavior: smooth;
+}
+
+/* Mobile-friendly animations */
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  .showcase-visual img {
+    transition: none;
+  }
+}
