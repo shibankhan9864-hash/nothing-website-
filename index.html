@@ -1,3 +1,4 @@
+
 <!doctype html>
 <html lang="en">
 <head>
@@ -11,14 +12,80 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="style.css">
+
+  <style>
+    .showcase {
+      position: relative;
+      overflow: hidden;
+      min-height: 90vh;
+      padding: 100px 7%;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      background: #080808;
+      border-top: 1px solid #262626;
+    }
+    .showcase .eyebrow { color: #ff3939; }
+    .showcase h2 {
+      position: relative;
+      z-index: 2;
+      font-size: clamp(3rem, 10vw, 8rem);
+      line-height: .9;
+      letter-spacing: -.07em;
+      margin: 25px 0;
+    }
+    .showcase h2 span { color: #ff3939; }
+    .showcase p:not(.eyebrow) {
+      position: relative;
+      z-index: 2;
+      color: #aaa;
+      max-width: 420px;
+      line-height: 1.8;
+    }
+    .showcase-visual {
+      width: min(100%, 900px);
+      height: clamp(260px, 55vw, 560px);
+      margin: 30px auto 0;
+      display: grid;
+      place-items: center;
+      perspective: 1000px;
+    }
+    .showcase-visual img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+      filter: drop-shadow(0 20px 60px #ff202022);
+      transform: scale(.82) rotateY(-12deg);
+      transition: filter .3s;
+      will-change: transform;
+    }
+    .showcase-visual img:hover {
+      filter: drop-shadow(0 20px 65px #ff202066);
+    }
+    .showcase-number {
+      position: absolute;
+      right: 7%;
+      bottom: 30px;
+      color: #777;
+      font-size: 12px;
+      letter-spacing: 3px;
+    }
+    @media (max-width: 600px) {
+      .showcase { min-height: 75vh; padding: 75px 6%; }
+      .showcase-visual { height: 300px; }
+    }
+  </style>
 </head>
 <body>
   <div class="noise" aria-hidden="true"></div>
+
   <header class="nav">
     <a class="wordmark" href="#top" aria-label="NOTHING home">NOTHING<span>®</span></a>
     <nav aria-label="Main navigation">
       <a href="#vision">VISION</a>
       <a href="#object">OBJECT</a>
+      <a href="#phone">PHONE</a>
+      <a href="#car">CAR</a>
       <a href="#contact">CONTACT</a>
     </nav>
     <button class="menu-button" id="menuButton" aria-label="Toggle menu" aria-expanded="false">☰</button>
@@ -65,8 +132,30 @@
       <div class="line-art" aria-hidden="true"><span></span><span></span><span></span></div>
     </section>
 
+    <section class="showcase" id="phone">
+      <p class="eyebrow">02 / ENGINEERED TO BE DIFFERENT</p>
+      <h2>NOTHING<br><span>PHONE.</span></h2>
+      <p>Pure design. Bold details. A new perspective on everyday technology.</p>
+      <div class="showcase-visual" data-zoom>
+        <img src="https://images.unsplash.com/photo-1598327105666-5b89351aff97?auto=format&amp;fit=crop&amp;w=1000&amp;q=85"
+             alt="Smartphone product design" loading="lazy">
+      </div>
+      <span class="showcase-number">OBJECT / 002</span>
+    </section>
+
+    <section class="showcase" id="car">
+      <p class="eyebrow">03 / MOTION MEETS MINIMALISM</p>
+      <h2>NOTHING<br><span>DRIVE.</span></h2>
+      <p>Designed around movement. Created to make every arrival feel different.</p>
+      <div class="showcase-visual" data-zoom>
+        <img src="https://images.unsplash.com/photo-1503376780353-7e6692767b70?auto=format&amp;fit=crop&amp;w=1400&amp;q=85"
+             alt="Sleek sports car" loading="lazy">
+      </div>
+      <span class="showcase-number">OBJECT / 003</span>
+    </section>
+
     <section class="feature" id="details">
-      <div class="feature-top"><p class="eyebrow">02 / THE DETAILS</p><p>LESS NOISE. MORE SIGNAL.</p></div>
+      <div class="feature-top"><p class="eyebrow">04 / THE DETAILS</p><p>LESS NOISE. MORE SIGNAL.</p></div>
       <div class="feature-card">
         <div class="rings" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i></div>
         <div class="feature-card-copy">
@@ -79,7 +168,7 @@
     </section>
 
     <section class="contact" id="contact">
-      <p class="eyebrow">03 / YOUR MOVE</p>
+      <p class="eyebrow">05 / YOUR MOVE</p>
       <h2>READY FOR<br><span>NOTHING?</span></h2>
       <a class="contact-button" href="mailto:hello@example.com">LET'S MAKE SOMETHING <span>↗</span></a>
       <p class="contact-note">A concept experience. Made for curious minds.</p>
@@ -91,6 +180,35 @@
     <span>© 2026 NOTHING STUDIO</span>
     <a href="#top">BACK TO TOP ↑</a>
   </footer>
+
   <script src="script.js"></script>
+  <script>
+    const zoomItems = document.querySelectorAll("[data-zoom]");
+
+    function updateZoom() {
+      zoomItems.forEach((item) => {
+        const image = item.querySelector("img");
+        if (!image) return;
+
+        const rect = item.getBoundingClientRect();
+        const vh = window.innerHeight;
+        const progress = Math.max(
+          0,
+          Math.min(1, (vh - rect.top) / (vh + rect.height))
+        );
+
+        const scale = 0.82 + progress * 0.38;
+        const rotate = -12 + progress * 24;
+
+        image.style.transform =
+          `scale(${scale}) rotateY(${rotate}deg)`;
+      });
+    }
+
+    window.addEventListener("scroll", updateZoom, { passive: true });
+    window.addEventListener("resize", updateZoom);
+    updateZoom();
+  </script>
 </body>
-</html>
+                                 </html>
+                                         
