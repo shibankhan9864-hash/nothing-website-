@@ -1,831 +1,219 @@
 
-:root {
-  --bg: #080808;
-  --white: #f4f4f0;
-  --muted: #929292;
-  --red: #e63232;
-  --line: rgba(255,255,255,.15);
-}
-
-* {
-  box-sizing: border-box;
-  margin: 0;
-  padding: 0;
-}
-
-html {
-  scroll-behavior: smooth;
-  scroll-padding-top: 80px;
-}
-
-body {
-  background: var(--bg);
-  color: var(--white);
-  font-family: "Space Grotesk", sans-serif;
-  overflow-x: hidden;
-}
-
-a {
-  color: inherit;
-  text-decoration: none;
-}
-
-button {
-  font: inherit;
-}
-
-::selection {
-  background: var(--red);
-  color: white;
-}
-
-.noise {
-  position: fixed;
-  inset: 0;
-  z-index: 20;
-  pointer-events: none;
-  opacity: .09;
-  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 180 180' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.32'/%3E%3C/svg%3E");
-}
-
-.nav {
-  height: 76px;
-  padding: 0 6%;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  border-bottom: 1px solid var(--line);
-  position: absolute;
-  inset: 0 0 auto;
-  z-index: 30;
-  background: rgba(8,8,8,.55);
-  backdrop-filter: blur(14px);
-}
-
-.wordmark {
-  font-size: 25px;
-  font-weight: 700;
-  letter-spacing: -2px;
-}
-
-.wordmark span {
-  font-size: 10px;
-  vertical-align: top;
-  margin-left: 3px;
-  letter-spacing: 0;
-}
-
-.nav nav {
-  display: flex;
-  gap: 35px;
-}
-
-.nav nav a,
-.hero-bottom,
-.eyebrow,
-.object-label,
-.feature-top > p:last-child,
-.corner-note,
-footer {
-  font-size: 10px;
-  letter-spacing: 1.5px;
-}
-
-.nav nav a {
-  color: #c2c2c2;
-  transition: color .25s;
-}
-
-.nav nav a:hover,
-footer a:hover {
-  color: var(--red);
-}
-
-.menu-button {
-  display: none;
-  color: white;
-  background: transparent;
-  border: 0;
-  font-size: 24px;
-  cursor: pointer;
-}
-
-.hero {
-  min-height: 780px;
-  height: 100svh;
-  max-height: 1050px;
-  padding: 140px 8% 90px;
-  position: relative;
-  display: flex;
-  align-items: center;
-  overflow: hidden;
-  isolation: isolate;
-}
-
-.hero::before {
-  content: "";
-  position: absolute;
-  width: 650px;
-  height: 650px;
-  right: -5%;
-  top: 12%;
-  border-radius: 50%;
-  background: radial-gradient(circle, rgba(125,125,125,.13), transparent 68%);
-  z-index: -1;
-  pointer-events: none;
-}
-
-.hero-copy {
-  position: relative;
-  z-index: 5;
-  width: 56%;
-  animation: rise-in 1s both;
-}
-
-.eyebrow {
-  color: var(--muted);
-  display: flex;
-  align-items: center;
-  gap: 10px;
-}
-
-.status-dot {
-  width: 7px;
-  height: 7px;
-  border-radius: 50%;
-  background: var(--red);
-  box-shadow: 0 0 12px var(--red);
-}
-
-.hero h1 {
-  margin: 30px 0 22px;
-  font-size: clamp(58px, 8.5vw, 125px);
-  line-height: .88;
-  letter-spacing: -.09em;
-  font-weight: 600;
-}
-
-.hero h1 span {
-  color: transparent;
-  -webkit-text-stroke: 1px #eee;
-}
-
-.hero h1 em,
-.feature-card h2 em {
-  color: var(--red);
-  font-style: normal;
-}
-
-.intro {
-  color: #b2b2b2;
-  font-size: 16px;
-  line-height: 1.8;
-}
-
-.round-link {
-  display: inline-flex;
-  align-items: center;
-  gap: 22px;
-  border: 1px solid #555;
-  border-radius: 50px;
-  padding: 13px 15px 13px 22px;
-  margin-top: 30px;
-  font-size: 9px;
-  letter-spacing: 1.3px;
-  transition: background .3s, border-color .3s, transform .3s;
-}
-
-.round-link b {
-  display: grid;
-  place-items: center;
-  width: 30px;
-  height: 30px;
-  background: var(--red);
-  border-radius: 50%;
-  font-size: 17px;
-}
-
-.round-link:hover {
-  background: #171717;
-  border-color: var(--red);
-  transform: translateY(-3px);
-}
-
-.object-stage {
-  position: absolute;
-  width: min(49vw, 650px);
-  aspect-ratio: 1;
-  right: 3%;
-  top: 49%;
-  transform: translateY(-50%);
-  perspective: 1000px;
-  transform-style: preserve-3d;
-}
-
-.orb {
-  position: absolute;
-  width: 43%;
-  aspect-ratio: 1;
-  top: 28%;
-  left: 29%;
-  border-radius: 50%;
-  background:
-    radial-gradient(ellipse at 30% 22%, #fff 0%, #bdbdbd 5%, #555 17%, transparent 32%),
-    radial-gradient(ellipse at 70% 72%, #777 0%, #242424 30%, #050505 66%);
-  box-shadow:
-    inset -20px -20px 45px #000,
-    inset 9px 9px 25px rgba(255,255,255,.5),
-    0 0 65px rgba(255,255,255,.09),
-    0 0 150px rgba(230,50,50,.08);
-  transform-style: preserve-3d;
-  will-change: transform;
-  transition: filter .3s;
-}
-
-.orb::before {
-  content: "";
-  position: absolute;
-  inset: 7%;
-  border: 1px solid rgba(255,255,255,.35);
-  border-radius: 50%;
-  transform: translateZ(12px);
-}
-
-.orb-highlight {
-  position: absolute;
-  top: 12%;
-  left: 15%;
-  width: 27%;
-  height: 12%;
-  border-radius: 50%;
-  background: rgba(255,255,255,.85);
-  filter: blur(10px);
-  transform: rotate(-35deg);
-}
-
-.orb-line {
-  position: absolute;
-  width: 130%;
-  height: 25%;
-  left: -15%;
-  top: 38%;
-  border-top: 1px solid rgba(255,255,255,.5);
-  border-bottom: 1px solid rgba(255,255,255,.15);
-  border-radius: 50%;
-  transform: rotate(-32deg) translateZ(25px);
-}
-
-.orb-core {
-  position: absolute;
-  width: 18%;
-  height: 18%;
-  top: 41%;
-  left: 41%;
-  border-radius: 50%;
-  background: #0a0a0a;
-  border: 1px solid rgba(255,255,255,.4);
-  box-shadow: 0 0 25px rgba(255,255,255,.15);
-  transform: translateZ(30px);
-}
-
-.orbit {
-  position: absolute;
-  width: 75%;
-  height: 31%;
-  top: 34%;
-  left: 12%;
-  border: 1px solid rgba(255,255,255,.28);
-  border-radius: 50%;
-  transform: rotate(-35deg);
-}
-
-.orbit-one {
-  animation: orbit-spin 18s linear infinite;
-}
-
-.orbit-two {
-  width: 82%;
-  height: 43%;
-  top: 29%;
-  left: 8%;
-  border-color: rgba(230,50,50,.45);
-  transform: rotate(53deg);
-  animation: orbit-spin 24s linear infinite reverse;
-}
-
-.orb-shadow {
-  position: absolute;
-  width: 45%;
-  height: 10%;
-  top: 75%;
-  left: 28%;
-  background: #fff;
-  opacity: .14;
-  filter: blur(35px);
-  border-radius: 50%;
-}
-
-.crosshair {
-  position: absolute;
-  color: #888;
-  font-size: 20px;
-}
-
-.crosshair-top {
-  top: 12%;
-  right: 20%;
-}
-
-.crosshair-bottom {
-  bottom: 16%;
-  left: 16%;
-}
-
-.object-label {
-  position: absolute;
-  right: 1%;
-  bottom: 10%;
-  line-height: 2;
-}
-
-.object-label span {
-  color: #777;
-  font-size: 8px;
-}
-
-.hero-bottom {
-  position: absolute;
-  bottom: 28px;
-  left: 8%;
-  right: 8%;
-  display: flex;
-  justify-content: space-between;
-  gap: 15px;
-  color: #777;
-  font-size: 8px;
-}
-
-.scroll-cue {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-}
-
-.scroll-cue i {
-  width: 35px;
-  height: 1px;
-  background: var(--red);
-  animation: line-pulse 1.5s infinite alternate;
-}
-
-.manifesto,
-.feature,
-.contact {
-  padding: 125px 8%;
-  position: relative;
-}
-
-.manifesto {
-  border-top: 1px solid var(--line);
-  overflow: hidden;
-}
-
-.manifesto-grid {
-  display: grid;
-  grid-template-columns: 1.2fr .8fr;
-  gap: 8%;
-  align-items: end;
-  margin-top: 55px;
-}
-
-.manifesto h2,
-.contact h2 {
-  font-size: clamp(45px, 7vw, 94px);
-  line-height: .98;
-  letter-spacing: -.075em;
-}
-
-.manifesto h2 span {
-  color: transparent;
-  -webkit-text-stroke: 1px #eee;
-}
-
-.manifesto-copy {
-  max-width: 410px;
-}
-
-.manifesto-copy p,
-.feature-card-copy p {
-  color: #999;
-  line-height: 1.9;
-  font-size: 14px;
-  margin-bottom: 18px;
-}
-
-.text-link {
-  display: inline-block;
-  margin-top: 14px;
-  padding-bottom: 10px;
-  border-bottom: 1px solid #555;
-  font-size: 10px;
-  letter-spacing: 1.2px;
-}
-
-.text-link span {
-  color: var(--red);
-  margin-left: 12px;
-}
-
-.line-art {
-  height: 100px;
-  margin-top: 70px;
-  display: flex;
-  gap: 12px;
-  align-items: center;
-  overflow: hidden;
-}
-
-.line-art span {
-  height: 1px;
-  background: linear-gradient(90deg, transparent, #666, transparent);
-  flex: 1;
-  transform: rotate(-10deg);
-}
-
-.line-art span:nth-child(2) {
-  transform: rotate(10deg);
-  background: linear-gradient(90deg, transparent, var(--red), transparent);
-}
-
-.feature {
-  padding-top: 30px;
-}
-
-.feature-top {
-  display: flex;
-  justify-content: space-between;
-  gap: 20px;
-  color: #888;
-}
-
-.feature-card {
-  position: relative;
-  min-height: 510px;
-  margin-top: 35px;
-  padding: 55px;
-  overflow: hidden;
-  border: 1px solid #303030;
-  background:
-    radial-gradient(ellipse at 75% 45%, rgba(255,255,255,.09), transparent 38%),
-    linear-gradient(135deg, #161616, #080808 65%);
-  transform-style: preserve-3d;
-}
-
-.feature-card::before {
-  content: "";
-  position: absolute;
-  inset: 0;
-  pointer-events: none;
-  background: linear-gradient(115deg, transparent 35%, rgba(255,255,255,.04) 50%, transparent 65%);
-  transform: translateX(-100%);
-  animation: light-sweep 8s ease-in-out infinite;
-}
-
-.feature-card-copy {
-  position: relative;
-  z-index: 2;
-  max-width: 350px;
-  transform: translateZ(40px);
-}
-
-.number {
-  color: var(--red);
-  font-size: 11px;
-  letter-spacing: 2px;
-}
-
-.feature-card h2 {
-  font-size: clamp(50px, 7vw, 85px);
-  line-height: .95;
-  letter-spacing: -.07em;
-  margin: 25px 0;
-}
-
-.rings {
-  position: absolute;
-  width: 400px;
-  height: 400px;
-  right: 7%;
-  top: 50%;
-  transform: translateY(-50%) rotateX(62deg) rotateZ(-25deg);
-  transform-style: preserve-3d;
-}
-
-.rings i {
-  position: absolute;
-  inset: calc(var(--i, 0) * 20px);
-  border: 1px solid rgba(255,255,255,.35);
-  border-radius: 50%;
-  animation: ring-turn 14s linear infinite;
-}
-
-.rings i:nth-child(1) { inset: 0; }
-.rings i:nth-child(2) { inset: 25px; animation-delay: -.5s; }
-.rings i:nth-child(3) { inset: 50px; animation-delay: -1s; }
-.rings i:nth-child(4) { inset: 75px; animation-delay: -1.5s; }
-.rings i:nth-child(5) {
-  inset: 100px;
-  border-color: var(--red);
-  animation-delay: -2s;
-}
-
-.corner-note {
-  position: absolute;
-  right: 25px;
-  bottom: 25px;
-  color: #666;
-  font-size: 8px;
-}
-
-.contact {
-  text-align: center;
-  padding-top: 145px;
-  padding-bottom: 140px;
-  border-top: 1px solid var(--line);
-  overflow: hidden;
-}
-
-.contact h2 {
-  margin: 35px 0;
-}
-
-.contact h2 span {
-  color: var(--red);
-}
-
-.contact-button {
-  display: inline-flex;
-  gap: 30px;
-  align-items: center;
-  padding: 18px 25px;
-  border: 1px solid #555;
-  font-size: 10px;
-  letter-spacing: 1.2px;
-  transition: background .3s, border .3s, transform .3s;
-}
-
-.contact-button span {
-  color: var(--red);
-  font-size: 17px;
-}
-
-.contact-button:hover {
-  background: #171717;
-  border-color: var(--red);
-  transform: translateY(-3px);
-}
-
-.contact-note {
-  color: #666;
-  font-size: 11px;
-  margin-top: 28px;
-}
-
-footer {
-  border-top: 1px solid var(--line);
-  min-height: 85px;
-  padding: 25px 8%;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 20px;
-  color: #777;
-  font-size: 9px;
-}
-
-footer .wordmark {
-  color: white;
-}
-
-.reveal {
-  opacity: 0;
-  transform: translateY(45px);
-  transition: opacity .85s ease, transform .85s cubic-bezier(.2,.7,.2,1);
-}
-
-.reveal.is-visible {
-  opacity: 1;
-  transform: translateY(0);
-}
-
-@keyframes rise-in {
-  from { opacity: 0; transform: translateY(25px); }
-  to { opacity: 1; transform: translateY(0); }
-}
-
-@keyframes orbit-spin {
-  from { rotate: 0deg; }
-  to { rotate: 360deg; }
-}
-
-@keyframes ring-turn {
-  from { rotate: 0deg; }
-  to { rotate: 360deg; }
-}
-
-@keyframes line-pulse {
-  from { transform: scaleX(.5); transform-origin: left; }
-  to { transform: scaleX(1); transform-origin: left; }
-}
-
-@keyframes light-sweep {
-  0%, 65% { transform: translateX(-100%); }
-  90%, 100% { transform: translateX(100%); }
-}
-
-@media (max-width: 760px) {
-  .nav {
-    height: 66px;
-    padding: 0 6%;
-  }
-
-  .wordmark {
-    font-size: 23px;
-  }
-
-  .menu-button {
-    display: block;
-    position: relative;
-    z-index: 32;
-  }
-
-  .nav nav {
-    position: absolute;
-    top: 65px;
-    left: 0;
-    right: 0;
-    display: flex;
-    flex-direction: column;
-    gap: 0;
-    padding: 0 6%;
-    background: rgba(8,8,8,.97);
-    border-bottom: 1px solid var(--line);
-    max-height: 0;
-    overflow: hidden;
-    transition: max-height .3s, padding .3s;
-  }
-
-  .nav nav.open {
-    max-height: 220px;
-    padding-top: 12px;
-    padding-bottom: 12px;
-  }
-
-  .nav nav a {
-    padding: 15px 0;
-  }
-
-  .hero {
-    height: auto;
-    min-height: 850px;
-    max-height: none;
-    padding: 125px 7% 100px;
-    display: block;
-  }
-
-  .hero-copy {
-    width: 100%;
-  }
-
-  .hero h1 {
-    font-size: clamp(55px, 13vw, 88px);
-    margin-top: 28px;
-  }
-
-  .intro {
-    font-size: 14px;
-  }
-
-  .object-stage {
-    width: min(100%, 420px);
-    right: 0;
-    left: 0;
-    top: auto;
-    bottom: 80px;
-    margin: auto;
-    transform: none;
-  }
-
-  .object-label {
-    right: 0;
-    bottom: 0;
-    font-size: 8px;
-  }
-
-  .hero-bottom {
-    left: 7%;
-    right: 7%;
-    bottom: 20px;
-    font-size: 7px;
-  }
-
-  .hero-bottom > span:first-child,
-  .hero-bottom > span:last-child {
-    display: none;
-  }
-
-  .hero-bottom {
-    justify-content: center;
-  }
-
-  .manifesto,
-  .feature,
-  .contact {
-    padding: 85px 7%;
-  }
-
-  .manifesto-grid {
-    grid-template-columns: 1fr;
-    gap: 30px;
-    margin-top: 38px;
-  }
-
-  .manifesto h2,
-  .contact h2 {
-    font-size: clamp(47px, 11vw, 75px);
-  }
-
-  .manifesto-copy p,
-  .feature-card-copy p {
-    font-size: 13px;
-  }
-
-  .line-art {
-    margin-top: 40px;
-  }
-
-  .feature {
-    padding-top: 10px;
-  }
-
-  .feature-top > p:last-child {
-    text-align: right;
-    font-size: 8px;
-  }
-
-  .feature-card {
-    min-height: 460px;
-    padding: 32px 25px;
-  }
-
-  .feature-card h2 {
-    font-size: 58px;
-  }
-
-  .rings {
-    width: 290px;
-    height: 290px;
-    right: -55px;
-    top: 65%;
-    opacity: .75;
-  }
-
-  .corner-note {
-    font-size: 7px;
-    right: 15px;
-    bottom: 15px;
-  }
-
-  .contact {
-    padding-top: 100px;
-    padding-bottom: 100px;
-  }
-
-  .contact-button {
-    gap: 15px;
-    padding: 16px;
-    font-size: 9px;
-  }
-
-  footer {
-    padding: 25px 6%;
-    flex-wrap: wrap;
-    font-size: 8px;
-  }
-}
-
-@media (prefers-reduced-motion: reduce) {
-  *,
-  *::before,
-  *::after {
-    scroll-behavior: auto !important;
-    animation-duration: .01ms !important;
-    animation-iteration-count: 1 !important;
-    transition-duration: .01ms !important;
-  }
-
-  .reveal {
-    opacity: 1;
-    transform: none;
-  }
-}
+<!doctype html>
+<html lang="en">
+<head>
+  <meta name="google-site-verification" content="ady-gb-pXpevhMU5QijvLAMvRriAY9qQfMwwDUprvuM" />
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#080808">
+  <meta name="description" content="NOTHING — an interactive 3D experience.">
+  <title>NOTHING — Beyond Ordinary</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+  <style>
+    .showcase {
+      position: relative;
+      min-height: 100vh;
+      padding: 110px 8%;
+      overflow: hidden;
+      border-top: 1px solid #292929;
+      background: #080808;
+    }
+    .showcase h2 {
+      position: relative;
+      z-index: 2;
+      margin: 20px 0;
+      font-size: clamp(45px, 8vw, 100px);
+      line-height: .95;
+      letter-spacing: -.07em;
+    }
+    .showcase h2 em { color: #e63232; font-style: normal; }
+    .showcase-copy {
+      position: relative;
+      z-index: 2;
+      max-width: 420px;
+      color: #999;
+      line-height: 1.8;
+    }
+    .showcase-visual {
+      position: relative;
+      display: grid;
+      place-items: center;
+      min-height: 65vh;
+      margin-top: 20px;
+      perspective: 1000px;
+    }
+    .showcase-visual img {
+      display: block;
+      width: min(80%, 460px);
+      max-height: 65vh;
+      object-fit: contain;
+      filter: drop-shadow(0 0 45px rgba(230,50,50,.16));
+      transform: scale(.82) rotateY(-12deg);
+      transition: transform .15s linear;
+      will-change: transform;
+    }
+    .car-visual img {
+      width: min(100%, 900px);
+      max-height: 60vh;
+    }
+    .detail-label {
+      position: absolute;
+      right: 0;
+      bottom: 15px;
+      color: #777;
+      font-size: 10px;
+      letter-spacing: 2px;
+    }
+    .showcase::before {
+      content: "";
+      position: absolute;
+      width: 60vw;
+      height: 60vw;
+      top: 25%;
+      right: -20%;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(230,50,50,.10), transparent 68%);
+      pointer-events: none;
+    }
+    @media(max-width:760px) {
+      .showcase { padding: 85px 7%; }
+      .showcase-visual { min-height: 50vh; }
+      .showcase-visual img { width: min(95%, 380px); }
+      .car-visual img { width: 100%; }
+    }
+    @media(prefers-reduced-motion:reduce) {
+      .showcase-visual img { transition: none; }
+    }
+  </style>
+</head>
+<body>
+  <div class="noise" aria-hidden="true"></div>
+
+  <header class="nav">
+    <a class="wordmark" href="#top" aria-label="NOTHING home">NOTHING<span>®</span></a>
+    <nav aria-label="Main navigation">
+      <a href="#vision">VISION</a>
+      <a href="#phone">PHONE</a>
+      <a href="#car">CAR</a>
+      <a href="#contact">CONTACT</a>
+    </nav>
+    <button class="menu-button" id="menuButton" aria-label="Toggle menu" aria-expanded="false">☰</button>
+  </header>
+
+  <main id="top">
+    <section class="hero" id="object">
+      <div class="hero-copy">
+        <p class="eyebrow"><span class="status-dot"></span> DIGITAL OBJECT 001 — 2026</p>
+        <h1>LESS,<br><span>BUT</span> <em>BETTER.</em></h1>
+        <p class="intro">A little less ordinary.<br>A lot more unexpected.</p>
+        <a class="round-link" href="#vision"><span>EXPLORE THE EXPERIENCE</span><b>↘</b></a>
+      </div>
+      <div class="object-stage" aria-label="Interactive 3D metallic orb">
+        <div class="orbit orbit-one"></div>
+        <div class="orbit orbit-two"></div>
+        <div class="orb-shadow"></div>
+        <div class="orb" id="orb">
+          <div class="orb-highlight"></div>
+          <div class="orb-line"></div>
+          <div class="orb-core"></div>
+        </div>
+        <div class="crosshair crosshair-top">+</div>
+        <div class="crosshair crosshair-bottom">+</div>
+        <p class="object-label">FORM / 001<br><span>MOVE YOUR CURSOR</span></p>
+      </div>
+      <div class="hero-bottom">
+        <span>DESIGNED TO MAKE YOU LOOK TWICE.</span>
+        <span class="scroll-cue"><i></i> SCROLL TO DISCOVER</span>
+        <span>NOTHING / 001</span>
+      </div>
+    </section>
+
+    <section class="manifesto" id="vision">
+      <p class="eyebrow">01 / THE VISION</p>
+      <div class="manifesto-grid">
+        <h2>MAKE ROOM<br>FOR <span>WONDER.</span></h2>
+        <div class="manifesto-copy">
+          <p>In a world that never stops adding, we choose to take a step back. To question the obvious. To find the extraordinary in the essential.</p>
+          <p>NOTHING is a digital playground for ideas, objects, and experiences that dare to be different.</p>
+          <a class="text-link" href="#phone">DISCOVER THE PHONE <span>↗</span></a>
+        </div>
+      </div>
+      <div class="line-art" aria-hidden="true"><span></span><span></span><span></span></div>
+    </section>
+
+    <section class="showcase" id="phone">
+      <p class="eyebrow">02 / OBJECT STUDY</p>
+      <h2>NOTHING <em>PHONE.</em></h2>
+      <p class="showcase-copy">A study in transparency, light and precision. Scroll to explore the design.</p>
+      <div class="showcase-visual" data-zoom>
+        <img src="https://images.unsplash.com/photo-1598327105666-5b89351aff97?auto=format&fit=crop&w=1000&q=85" alt="Smartphone product visual" loading="lazy">
+        <span class="detail-label">OBJECT / 002 — PHONE</span>
+      </div>
+      <p class="showcase-copy">CAMERA / MATERIAL / LIGHT — a visual concept inspired by minimalist technology.</p>
+    </section>
+
+    <section class="showcase" id="car">
+      <p class="eyebrow">03 / MOTION STUDY</p>
+      <h2>BUILT TO <em>MOVE.</em></h2>
+      <p class="showcase-copy">A dramatic automotive study with a dark finish and bold red accents.</p>
+      <div class="showcase-visual car-visual" data-zoom>
+        <img src="https://images.unsplash.com/photo-1503376780353-7e6692767b70?auto=format&fit=crop&w=1400&q=85" alt="Sports car exterior" loading="lazy">
+        <span class="detail-label">OBJECT / 003 — AUTOMOTIVE</span>
+      </div>
+      <p class="showcase-copy">FORM / WHEELS / LIGHT — follow the scroll for a cinematic reveal.</p>
+    </section>
+
+    <section class="feature" id="details">
+      <div class="feature-top">
+        <p class="eyebrow">04 / THE DETAILS</p>
+        <p>LESS NOISE. MORE SIGNAL.</p>
+      </div>
+      <div class="feature-card">
+        <div class="rings" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i></div>
+        <div class="feature-card-copy">
+          <span class="number">001</span>
+          <h2>FEEL THE<br><em>FUTURE.</em></h2>
+          <p>Precision in every curve. Purpose in every pixel.</p>
+        </div>
+        <span class="corner-note">INTERACTIVE STUDY / 001</span>
+      </div>
+    </section>
+
+    <section class="contact" id="contact">
+      <p class="eyebrow">05 / YOUR MOVE</p>
+      <h2>READY FOR<br><span>NOTHING?</span></h2>
+      <a class="contact-button" href="mailto:hello@example.com">LET'S MAKE SOMETHING <span>↗</span></a>
+      <p class="contact-note">A concept experience. Made for curious minds.</p>
+    </section>
+  </main>
+
+  <footer>
+    <a class="wordmark" href="#top">NOTHING<span>®</span></a>
+    <span>© 2026 NOTHING STUDIO</span>
+    <a href="#top">BACK TO TOP ↑</a>
+  </footer>
+
+  <script src="script.js"></script>
+  <script>
+    const zoomItems = document.querySelectorAll("[data-zoom]");
+    function updateZoom() {
+      zoomItems.forEach((item) => {
+        const image = item.querySelector("img");
+        if (!image) return;
+        const rect = item.getBoundingClientRect();
+        const vh = window.innerHeight;
+        const progress = Math.max(0, Math.min(1, (vh - rect.top) / (vh + rect.height)));
+        const scale = 0.82 + progress * 0.38;
+        const rotate = -12 + progress * 24;
+        image.style.transform = `scale(${scale}) rotateY(${rotate}deg)`;
+      });
+    }
+    window.addEventListener("scroll", updateZoom, { passive: true });
+    window.addEventListener("resize", updateZoom);
+    updateZoom();
+  </script>
+</body>
+</html>
